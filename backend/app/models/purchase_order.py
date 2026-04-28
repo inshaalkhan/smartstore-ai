@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database import Base
 
@@ -7,8 +8,10 @@ class PurchaseOrder(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     supplier_id = Column(Integer, ForeignKey("suppliers.id"), nullable=False)
-    status = Column(String, default="draft")  # draft, sent, acknowledged, received
+    status = Column(String, default="draft")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    line_items = relationship("POLineItem", back_populates="purchase_order")
 
 class POLineItem(Base):
     __tablename__ = "po_line_items"
@@ -18,3 +21,5 @@ class POLineItem(Base):
     product_name = Column(String, nullable=False)
     qty = Column(Integer, nullable=False)
     unit_price = Column(Float, nullable=False)
+
+    purchase_order = relationship("PurchaseOrder", back_populates="line_items")
