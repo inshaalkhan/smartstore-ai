@@ -6,22 +6,22 @@ SmartStore AI is a full-stack web application that helps small and medium retail
 
 ## Architecture
 
-┌─────────────────────────────────────────┐
-│         React Frontend (Vite)           │
-│  Dashboard │ Products │ Suppliers │ POs │
-│   Invoice Upload │ Reports │ AI Chat    │
-└────────────────────┬────────────────────┘
-│ REST API + JWT
-┌────────────────────▼────────────────────┐
-│         FastAPI Backend (Python)        │
-│  Auth │ Products │ Suppliers │ POs      │
-│  AI Chat │ OCR Parser │ Scheduler       │
-└──────┬─────────────────────┬────────────┘
-│                     │
-┌──────▼──────┐   ┌──────────▼───────────┐
-│  PostgreSQL │   │    Groq LLM API      │
-│  Database   │   │   llama-3.1-8b       │
-└─────────────┘   └──────────────────────┘
+
+
+```mermaid
+graph TD
+    A["🖥️ React Frontend (Vite)\nDashboard | Products | Suppliers | POs\nInvoice Upload | Reports | AI Chat"]
+    
+    B["⚙️ FastAPI Backend (Python)\nAuth | Products | Suppliers | POs\nAI Chat | OCR Parser | Scheduler"]
+    
+    C[("🗄️ PostgreSQL\nDatabase")]
+    
+    D["🤖 Groq LLM API\nllama-3.1-8b-instant"]
+
+    A -->|"REST API + JWT"| B
+    B --> C
+    B --> D
+```
 
 ---
 
